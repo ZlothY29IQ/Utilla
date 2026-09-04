@@ -28,6 +28,6 @@ internal class Plugin : BaseUnityPlugin
                 $"Utilla v{Constants.Version}, presented to you by: legoandmars, developer9998, Seralyth Software, and ZlothY.");
 
         DontDestroyOnLoad(new GameObject($"{Constants.Name} {Constants.Version}", typeof(UtillaNetworkController),
-                typeof(GamemodeManager), typeof(ConductBoardManager)));
+                typeof(GamemodeManager)));
     }
 }

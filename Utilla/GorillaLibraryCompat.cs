@@ -161,10 +161,7 @@ namespace Utilla
                 InvokeMarkedMethods(plugin.Plugin, plugin.JoinMethods, currentGamemode);
         }
 
-        public static void InvokeRoomLeft()
-        {
-            InvokeRoomLeft(currentGamemode);
-        }
+        public static void InvokeRoomLeft() => InvokeRoomLeft(currentGamemode);
 
         public static void InvokeRoomLeft(string gamemode)
         {
@@ -179,40 +176,19 @@ namespace Utilla
             GameModeUtility.SetCurrentGameMode(null);
         }
 
-        public static void InvokePlayerEnteredRoom(NetPlayer player)
-        {
-            GorillaLibrary.Events.Player.OnPlayerEnteredRoom?.Invoke(player);
-        }
+        public static void InvokePlayerEnteredRoom(NetPlayer player) => GorillaLibrary.Events.Player.OnPlayerEnteredRoom?.Invoke(player);
 
-        public static void InvokePlayerLeftRoom(NetPlayer player)
-        {
-            GorillaLibrary.Events.Player.OnPlayerLeftRoom?.Invoke(player);
-        }
+        public static void InvokePlayerLeftRoom(NetPlayer player) => GorillaLibrary.Events.Player.OnPlayerLeftRoom?.Invoke(player);
 
-        public static void InvokePlayerNameChanged(NetPlayer player, string name)
-        {
-            GorillaLibrary.Events.Player.OnPlayerNameChanged?.Invoke(player, name);
-        }
+        public static void InvokePlayerNameChanged(NetPlayer player, string name) => GorillaLibrary.Events.Player.OnPlayerNameChanged?.Invoke(player, name);
 
-        public static void InvokeRigAdded(VRRig rig, NetPlayer player)
-        {
-            GorillaLibrary.Events.Rig.OnRigAdded?.Invoke(rig, player);
-        }
+        public static void InvokeRigAdded(VRRig rig, NetPlayer player) => GorillaLibrary.Events.Rig.OnRigAdded?.Invoke(rig, player);
 
-        public static void InvokeRigRemoved(VRRig rig)
-        {
-            GorillaLibrary.Events.Rig.OnRigRemoved?.Invoke(rig);
-        }
+        public static void InvokeRigRemoved(VRRig rig) => GorillaLibrary.Events.Rig.OnRigRemoved?.Invoke(rig);
 
-        public static void InvokeRigColourChanged(VRRig rig, Color colour)
-        {
-            GorillaLibrary.Events.Rig.OnColourChanged?.Invoke(rig, colour);
-        }
+        public static void InvokeRigColourChanged(VRRig rig, Color colour) => GorillaLibrary.Events.Rig.OnColourChanged?.Invoke(rig, colour);
 
-        public static void InvokeGameOverlayActivation(bool active)
-        {
-            GorillaLibrary.Events.Player.OnGameOverlayActivation?.Invoke(active);
-        }
+        public static void InvokeGameOverlayActivation(bool active) => GorillaLibrary.Events.Player.OnGameOverlayActivation?.Invoke(active);
 
         private static List<MethodInfo> GetMarkedMethods(Type type, Type attributeType)
         {
@@ -669,7 +645,7 @@ namespace GorillaLibrary.Models
             loaded = true;
         }
 
-        public async Task<T> LoadAsset<T>(string name) where T : Object
+        async public Task<T> LoadAsset<T>(string name) where T : Object
         {
             object cachedAsset;
 
@@ -690,7 +666,7 @@ namespace GorillaLibrary.Models
             return asset;
         }
 
-        public async Task<T[]> LoadAssetWithSubAssets<T>(string name) where T : Object
+        async public Task<T[]> LoadAssetWithSubAssets<T>(string name) where T : Object
         {
             object cachedAsset;
 
@@ -786,7 +762,7 @@ namespace GorillaLibrary.Extensions
             }
         }
 
-        public static async Task AsAwaitable(this YieldInstruction instruction)
+        async public static Task AsAwaitable(this YieldInstruction instruction)
         {
             MonoBehaviour behaviour = Behaviour;
 
@@ -801,7 +777,7 @@ namespace GorillaLibrary.Extensions
             behaviour.StopCoroutine(coroutine);
         }
 
-        public static async Task AsAwaitable(this CustomYieldInstruction instruction)
+        async public static Task AsAwaitable(this CustomYieldInstruction instruction)
         {
             MonoBehaviour behaviour = Behaviour;
 
@@ -809,14 +785,14 @@ namespace GorillaLibrary.Extensions
                 return;
 
             TaskCompletionSource<CustomYieldInstruction> completionSource = new();
-            IEnumerator                                  coroutine = AwaitableRoutine(instruction, completionSource);
+            IEnumerator                                  coroutine        = AwaitableRoutine(instruction, completionSource);
 
             behaviour.StartCoroutine(coroutine);
             await completionSource.Task;
             behaviour.StopCoroutine(coroutine);
         }
 
-        public static async Task AsAwaitable(this AsyncOperation operation)
+        async public static Task AsAwaitable(this AsyncOperation operation)
         {
             if (operation == null)
                 return;
@@ -954,9 +930,9 @@ namespace GorillaLibrary.Extensions
             return limitLength ? playerName.LimitLength(12) : playerName;
         }
 
-        public static GetAccountInfoResult GetAccountInfo(this NetPlayer netPlayer,
+        public static GetAccountInfoResult GetAccountInfo(this NetPlayer               netPlayer,
                                                           Action<GetAccountInfoResult> callback,
-                                                          double maxCacheTime = double.MaxValue) =>
+                                                          double                       maxCacheTime = double.MaxValue) =>
                 PlayerUtility.GetAccountInfo(netPlayer.UserId, callback, maxCacheTime);
 
         public static DateTime GetAccountCreation(this NetPlayer netPlayer, Action<DateTime> callback,
@@ -1053,7 +1029,7 @@ namespace GorillaLibrary.Extensions
             }
         }
 
-        public static void GetCosmetics(this VRRig rig, out CosmeticsController.CosmeticSet currentWornSet,
+        public static void GetCosmetics(this VRRig                           rig, out CosmeticsController.CosmeticSet currentWornSet,
                                         out  CosmeticsController.CosmeticSet tryOnSet)
         {
             currentWornSet = rig.cosmeticSet;
@@ -1173,10 +1149,7 @@ namespace GorillaLibrary.Utilities
             return found ?? new GameModeWrapper(gmString, gmString);
         }
 
-        public static GameModeWrapper FindGameModeFromId(string id)
-        {
-            return GetGameMode(gamemode => gamemode.ID == id) ?? new GameModeWrapper(id, id);
-        }
+        public static GameModeWrapper FindGameModeFromId(string id) => GetGameMode(gamemode => gamemode.ID == id) ?? new GameModeWrapper(id, id);
 
         public static GameModeWrapper GetGameMode(Func<GameModeWrapper, bool> predicate) =>
                 GameModes.LastOrDefault(predicate);
@@ -1707,7 +1680,7 @@ namespace GorillaLibrary.Utilities
             return bundle;
         }
 
-        public static async Task<AssetBundle> LoadBundleAsync(Assembly assembly, string path)
+        async public static Task<AssetBundle> LoadBundleAsync(Assembly assembly, string path)
         {
             Stream stream = assembly.GetManifestResourceStream(path);
 
@@ -1721,7 +1694,7 @@ namespace GorillaLibrary.Utilities
             return request.assetBundle;
         }
 
-        public static async Task<T> LoadAssetAsync<T>(AssetBundle bundle, string name) where T : Object
+        async public static Task<T> LoadAssetAsync<T>(AssetBundle bundle, string name) where T : Object
         {
             if (bundle == null)
                 return null;
@@ -1732,7 +1705,7 @@ namespace GorillaLibrary.Utilities
             return request.asset as T;
         }
 
-        public static async Task<T[]> LoadAssetsWithSubAssetsAsync<T>(AssetBundle bundle, string name) where T : Object
+        async public static Task<T[]> LoadAssetsWithSubAssetsAsync<T>(AssetBundle bundle, string name) where T : Object
         {
             if (bundle == null)
                 return new T[0];
@@ -1748,7 +1721,7 @@ namespace GorillaLibrary.Utilities
     {
         private static readonly Dictionary<string, TaskCompletionSource<Texture2D>> Cache = new();
 
-        public static async Task<Texture2D> LoadTexture(string url, TextureFormat format = TextureFormat.RGB24)
+        async public static Task<Texture2D> LoadTexture(string url, TextureFormat format = TextureFormat.RGB24)
         {
             TaskCompletionSource<Texture2D> completionSource;
 
@@ -1783,7 +1756,7 @@ namespace GorillaLibrary.Utilities
 
     public static class WebRequestUtility
     {
-        public static async void SendRequest(string            url, WebRequest model, Action<string> onSuccess,
+        async public static void SendRequest(string            url, WebRequest model, Action<string> onSuccess,
                                              Action<Exception> onError)
         {
             UnityWebRequest request = null;
@@ -1862,7 +1835,7 @@ namespace GorillaLibrary.Utilities
 
         private static readonly Dictionary<string, WebSocketData> Data = new();
 
-        public static async Task<WebSocketData> Connect(string url, CancellationToken cancellationToken = default)
+        async public static Task<WebSocketData> Connect(string url, CancellationToken cancellationToken = default)
         {
             WebSocketData existing;
 
@@ -1890,7 +1863,7 @@ namespace GorillaLibrary.Utilities
             }
         }
 
-        private static async Task ReceiveLoop(WebSocketData data)
+        private async static Task ReceiveLoop(WebSocketData data)
         {
             byte[] buffer = new byte[8192];
 
@@ -1930,7 +1903,7 @@ namespace GorillaLibrary.Utilities
                 }
         }
 
-        public static async Task SendMessage(WebSocketData     data, object payload,
+        async public static Task SendMessage(WebSocketData     data, object payload,
                                              CancellationToken cancellationToken = default)
         {
             if (data == null || !data.IsConnected)
@@ -1978,7 +1951,7 @@ namespace GorillaLibrary.Utilities
                 data.Subscribers.Clear();
         }
 
-        public static async Task Disconnect(WebSocketData data)
+        async public static Task Disconnect(WebSocketData data)
         {
             if (data == null)
                 return;

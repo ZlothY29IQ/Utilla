@@ -30,10 +30,7 @@ internal class GameModeSelectorPatch
 
     [HarmonyPatch(nameof(GameModeSelectorButtonLayout.SetupButtons))]
     [HarmonyPrefix]
-    public static void SetupButtonsPrefix(GameModeSelectorButtonLayout __instance)
-    {
-        NetworkSystem.Instance.OnJoinedRoomEvent -= __instance.SetupButtons;
-    }
+    public static void SetupButtonsPrefix(GameModeSelectorButtonLayout __instance) => NetworkSystem.Instance.OnJoinedRoomEvent -= __instance.SetupButtons;
 
     [HarmonyPatch(nameof(GameModeSelectorButtonLayout.SetupButtons))]
     [HarmonyPostfix]

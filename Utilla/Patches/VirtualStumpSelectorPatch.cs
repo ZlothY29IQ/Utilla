@@ -10,10 +10,7 @@ internal class VirtualStumpSelectorPatch
 {
     [HarmonyPatch(nameof(CustomMapModeSelector.OnEnable))]
     [HarmonyPrefix]
-    public static void OnEnablePrefix()
-    {
-        GorillaComputerPatches.AllowSettingMode = false;
-    }
+    public static void OnEnablePrefix() => GorillaComputerPatches.AllowSettingMode = false;
 
     [HarmonyPatch(nameof(CustomMapModeSelector.OnEnable))]
     [HarmonyPostfix]
@@ -35,10 +32,7 @@ internal class VirtualStumpSelectorPatch
 
     [HarmonyPatch(nameof(CustomMapModeSelector.ResetButtons))]
     [HarmonyPrefix]
-    public static void ResetButtonsPrefix()
-    {
-        GorillaComputerPatches.AllowSettingMode = false;
-    }
+    public static void ResetButtonsPrefix() => GorillaComputerPatches.AllowSettingMode = false;
 
     [HarmonyPatch(nameof(CustomMapModeSelector.ResetButtons))]
     [HarmonyPostfix]
@@ -55,10 +49,7 @@ internal class VirtualStumpSelectorPatch
 
     [HarmonyPatch(nameof(CustomMapModeSelector.SetAvailableGameModes))]
     [HarmonyPrefix]
-    public static void AvailableModesPrefix()
-    {
-        GorillaComputerPatches.AllowSettingMode = false;
-    }
+    public static void AvailableModesPrefix() => GorillaComputerPatches.AllowSettingMode = false;
 
     [HarmonyPatch(nameof(CustomMapModeSelector.SetAvailableGameModes))]
     [HarmonyPostfix]

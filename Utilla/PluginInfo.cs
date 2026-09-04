@@ -12,8 +12,5 @@ public class PluginInfo
     public Action<string>  OnGamemodeJoin  { get; set; }
     public Action<string>  OnGamemodeLeave { get; set; }
 
-    public override string ToString()
-    {
-        return $"{Plugin.Info.Metadata.Name} [{string.Join(", ", Gamemodes.Select(x => x.DisplayName))}]";
-    }
+    public override string ToString() => $"{Plugin.Info.Metadata.Name} [{string.Join(", ", Gamemodes.Select(x => x.DisplayName))}]";
 }
